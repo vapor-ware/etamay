@@ -2,7 +2,7 @@
 
 
 __title__ = 'etamay'
-__version__ = '0.0.1'
+__version__ = '0.1.0'
 __description__ = 'etaMay Metadata'
 __author__ = 'Marco Ceppi'
 __author_email__ = 'marco@vapor.io'
