@@ -9,7 +9,7 @@ def fuzzy_find(branches, tree):
     total = len(branches)
 
     if total == 1:
-        return self.find_uri(branches[0], tree)
+        return find_uri(branches[0], tree)
 
     c = 0
     branch = branches[0]
