@@ -1,16 +1,15 @@
 
 import logging
 
-from aiohttp import web
+import utils
+import config
 
-from etamay import utils
-from etamay import config
+from aiohttp import web
 
 log = logging.getLogger('etamay.views.api.v0')
 
 
 class v0ApiView(web.View):
-
 
     async def shake_tree(self, branches, tree):
         log.info('Performing tree traversal for {}'.format(branches))

@@ -2,7 +2,7 @@
 import logging
 
 from aiohttp import web
-from etamay.views.api import v0
+from views.api import v0
 
 log = logging.getLogger('etamay.views.api')
 
