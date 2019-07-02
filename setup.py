@@ -13,7 +13,6 @@ here = Path(__file__).parent
 
 
 def parse_requirements(filename: str) -> List[str]:
-    """Return requirements from requirements file."""
     reqs = (here / filename).read_text().strip().split('\n')
     reqs = [r.strip() for r in reqs]
     reqs = [r for r in sorted(reqs) if r and not r.startswith('#')]
@@ -47,7 +46,8 @@ setup(
     author_email=pkg['__author_email__'],
     packages=find_packages(),
     package_data={'': ['LICENSE']},
+    package_dir={'etamay': 'etamay'},
     python_requires='>=3.6',
-    install_requires=[],
+    install_requires=req,
     zip_safe=False,
 )

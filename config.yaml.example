@@ -1,0 +1,50 @@
+sites:
+    ke1-ord:
+        name: wrigley
+    ke2-ord:
+        name: edens
+    ke3-ord:
+        name: pilsen
+devices:
+    efr1.ke1.ord:
+        site: ke1-ord
+        ports:
+            xe-0/0/16:
+                location: L4B
+                kind: 10gbe
+                rack: w6
+                comment: Pluribus
+            xe-0/0/46:
+                location: Management
+                kind: 10gbe
+                rack: mmr
+                comment: Vapor
+    efr1.ke2.ord:
+        site: ke2-ord
+        ports:
+            xe-0/0/16:
+                location: L4B
+                kind: 10gbe
+                rack: w6
+                comment: Pluribus
+            xe-0/0/46:
+                location: Management
+                kind: 10gbe
+                rack: mmr
+                comment: Vapor
+    efr2.ke1.ord:
+        site: ke1-ord
+        ports:
+            xe-0/0/46:
+                location: Management
+                kind: 10gbe
+                rack: mmr
+                comment: Vapor
+    efr2.ke2.ord:
+        site: ke2-ord
+        interfaces:
+            xe-0/0/46:
+                location: Management
+                kind: 10gbe
+                rack: mmr
+                comment: Vapor
