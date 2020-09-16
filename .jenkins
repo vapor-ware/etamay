@@ -1,66 +1,12 @@
-pipeline {
+#!/usr/bin/env groovy
 
-  agent any
+// Include this shared CI repository to load script helpers and libraries.
+library identifier: 'vapor@1.0.0-RC12', retriever: modernSCM([
+    $class: 'GitSCMSource',
+    remote: 'https://github.com/vapor-ware/ci-shared.git',
+    credentialsId: 'vio-bot-gh',
+])
 
-  environment {
-    IMAGE_NAME = 'vaporio/etamay'
-  }
-
-  stages {
-    stage('Checkout') {
-      steps {
-        checkout scm
-      }
-    }
-
-    stage('Build') {
-      when {
-        anyOf {
-          branch 'master'
-          buildingTag()
-        }
-      }
-
-      steps {
-        sh "docker build --build-arg VCS_REF=${env.GIT_COMMIT} --build-arg BUILD_VERSION=${env.BUILD_NUMBER} --label build.source=${env.BRANCH_NAME} . -t ${IMAGE_NAME}:${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
-      }
-    }
-
-    stage('Publish') {
-      when {
-        anyOf{
-          branch 'master'
-          buildingTag()
-        }
-      }
-
-      parallel {
-        stage('Release') {
-          when {
-            buildingTag()
-          }
-
-          steps {
-            sh "docker tag ${IMAGE_NAME}:${env.BRANCH_NAME}-${env.BUILD_NUMBER} ${IMAGE_NAME}:${env.TAG_NAME}"
-            withDockerRegistry(registry: [credentialsId: 'vio-docker-hub']) {
-              sh "docker push ${IMAGE_NAME}:${env.TAG_NAME}"
-            }
-          }
-        }
-
-        stage('Latest') {
-          when {
-            branch 'master'
-          }
-
-          steps {
-            sh "docker tag ${IMAGE_NAME}:${env.BRANCH_NAME}-${env.BUILD_NUMBER} ${IMAGE_NAME}:latest"
-            withDockerRegistry(registry: [credentialsId: 'vio-docker-hub']) {
-              sh "docker push ${IMAGE_NAME}:latest"
-            }
-          }
-        }
-      }
-    }
-  }
-}
+dockerBuildPipeline([
+    'image': 'vaporio/etamay',
+])
