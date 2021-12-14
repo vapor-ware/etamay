@@ -1,4 +1,4 @@
-FROM vaporio/python:3.6 as builder
+FROM docker.io/vaporio/python:3.6 as builder
 COPY requirements.txt .
 
 WORKDIR /build
@@ -6,7 +6,7 @@ WORKDIR /build
 RUN pip install --prefix=/build -r /requirements.txt --no-warn-script-location \
  && rm -rf /root/.cache
 
-FROM vaporio/python:3.6-slim
+FROM docker.io/vaporio/python:3.6-slim
 COPY --from=builder /build /usr/local
 
 COPY . /code
